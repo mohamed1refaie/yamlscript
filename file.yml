@@ -1,0 +1,31 @@
+- c: first command at level 1
+  next:
+    - c: first command at level 2
+      next:
+        - c : first command at level 3
+          next:
+            - c: first command at level 4
+              next:
+                - c : first command at level 5
+                - c : second command at level 5
+                - c : third command at level 5
+        - c : second command at level 3
+          next:
+            - c : second command at level 4
+  
+
+- c: second command at level 1
+  next:
+    - c : second command at level 2
+      next : 
+        - c : third command at level 3
+          next: 
+            - c : third command at level 4
+            - c : fourth command at level 4
+            - c : fifth command at level 4
+              next :
+                - c : fourth command at level 5
+                  next :
+                    - c : first command at level 6
+                    - c : second command at level 6
+    
