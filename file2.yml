@@ -1,0 +1,52 @@
+- c: bin
+- c: etc
+- c: games
+- c: include
+- c: lib
+  next:
+    - c: python3.7
+      next:
+        - c : dist-packages
+          next:
+            - c: test-in dist
+              next:
+                - c : testin in in dist 
+                - c : test in i in in in sdfsf
+                - c : test in in s ss 3
+        - c : site-packages
+          next:
+            - c : test in stites packages
+  
+- c: man
+  next:
+    - c : share/man
+- c : sbin
+- c : share
+  next:
+    - c : ca-cartificates
+    - c : fonts
+    - c : man
+    - c : sgml
+      next:
+        - c: declarations
+        - c: dtd
+        - c: entitles
+        - c: misc
+        - c: stylesheets
+    - c : xml
+      next : 
+        - c: delcartions
+        - c: entitles
+        - c: misc
+        - c : schemse
+          next: 
+            - c : indis schemes 1
+            - c : indsisr shc2 
+            - c : inssfs sdch3
+              next :
+                - c : insdfisd sch 3 1
+                  next :
+                    - c : insids ch 3 1 1
+                    - c : insids ch 3 1 1
+- c : src
+    
