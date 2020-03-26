@@ -1,6 +1,6 @@
-- c: first command at level 1
+- c: git clone https://github.com/mohamed1refaie/notification-service.git first
   next:
-    - c: first command at level 2
+    - c: cd first && npm install
       next:
         - c : first command at level 3
           next:
@@ -14,9 +14,9 @@
             - c : second command at level 4
   
 
-- c: second command at level 1
+- c: git clone https://github.com/mohamed1refaie/notification-service.git second
   next:
-    - c : second command at level 2
+    - c : cd second && npm install
       next : 
         - c : third command at level 3
           next: 

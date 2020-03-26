@@ -13,6 +13,7 @@
   "author": "Mohamed Refaie",
   "license": "ISC",
   "dependencies": {
+    "spinnies": "^0.5.1",
     "yaml": "^1.8.2"
   }
 }
