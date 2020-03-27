@@ -1,8 +1,8 @@
-- c: bin
-- c: etc
-- c: games
-- c: include
-- c: lib
+- c : bin
+- c : etc
+- c : games
+- c : include
+- c : lib
   next:
     - c: python3.7
       next:
@@ -17,7 +17,7 @@
           next:
             - c : test in stites packages
   
-- c: man
+- c : man
   next:
     - c : share/man
 - c : sbin

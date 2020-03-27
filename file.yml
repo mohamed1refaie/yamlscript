@@ -1,6 +1,6 @@
 - c: git clone https://github.com/mohamed1refaie/notification-service.git first
   next:
-    - c: cd first && npm install
+    - c: cd first && mkdir refzay
       next:
         - c : first command at level 3
           next:
@@ -9,10 +9,10 @@
                 - c : first command at level 5
                 - c : second command at level 5
                 - c : third command at level 5
-        - c : second command at level 3
+        - c : cd first/refzay && mkdir insideRwfzay
           next:
             - c : second command at level 4
-  
+    - c: cd first && mkdir refawy
 
 - c: git clone https://github.com/mohamed1refaie/notification-service.git second
   next:
