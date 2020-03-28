@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Run scripts using yaml files",
   "main": "index.js",
+  "bin": {
+    "yamlscript": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +16,7 @@
   "author": "Mohamed Refaie",
   "license": "ISC",
   "dependencies": {
+    "commander": "^5.0.0",
     "spinnies": "^0.5.1",
     "yaml": "^1.8.2"
   }
