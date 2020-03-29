@@ -69,7 +69,7 @@ function read (arr,indent,level,type=true) {
 
 const stopChilds = async (arr,level) =>{
   for(let i=0;i<arr.length;i++){
-    spinnies.update(arr[i].c+""+level+""+i,{status:"fail", failColor:"gray"});
+    spinnies.update(arr[i].c+""+level+""+i,{status:"fail", failColor:"gray", text:spinnies.spinners[arr[i].c+""+level+""+i].text+"  (terminated)"});
     writeLog("command : "+`'`+arr[i].c+`',`+" terminated");
     if(arr[i].next)
       stopChilds(arr[i].next,level+1);
@@ -148,6 +148,8 @@ const load = (filename,alias)  => {
         finalFileName = alias;
       } else {
         finalFileName = filename;
+        finalFileName = finalFileName.split('/');
+        finalFileName = finalFileName[finalFileName.length-1];
       }
       if (!fs.existsSync(scriptsPath)){
         fs.mkdirSync(scriptsPath);
@@ -211,6 +213,22 @@ const list = () => {
   }
  }
 
+ const run = (filename) => {
+  if (!fs.existsSync(scriptsPath)){
+    fs.mkdirSync(scriptsPath);
+  }
+  if(fileExists(scriptsPath+filename)){
+    createLog();
+    console.log(`you can find a complete log for this run at ./_logs/`+logName)
+    const file = fs.readFileSync(scriptsPath+filename, 'utf8')
+    let res = YAML.parse(file);
+    read(res,"",0);
+    execCommands(res,0);
+  } else {
+    console.log(`There is no loaded script with name `+filename);
+  }
+ }
+
 // createLog();
 // const file = fs.readFileSync('./file.yml', 'utf8')
 // let res = YAML.parse(file);
@@ -259,6 +277,16 @@ program
   // function to execute when command is uses
   .action(function(script) {
     display(script);
+  });
+
+  program
+  .command("run <script>") // sub-command name
+  .alias("r") // alternative sub-command
+  .description("Run an already loaded script") // command description
+
+  // function to execute when command is uses
+  .action(function(script) {
+    run(script);
   });
 
   program
