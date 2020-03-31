@@ -229,6 +229,44 @@ const list = () => {
   }
  }
 
+ const make = (commands) => {
+   let text='';
+   if(commands) {
+     for(let i=0;i<commands.length;i++){
+       text+= '- c : '+commands[i];
+       if(i!==commands.length-1)text+='\n';
+     }
+   }
+   text+=`
+   # - c: git clone https://github.com/<someuser>/<somerepo>.git <somename>
+   #   next:
+   #     - c: cd <somename> && npm install
+   #       next:
+   #         - c : cd <somename> && mkdir <dummyname>
+   #           next:
+   #             - c: cd <somename> && git remote set-url origin <someurl>
+   #               next:
+   #                 - c : npm start
+   #                 - c : cd <somename> && git add . && git commit -m 'initial commit' && git push
+   #                 - c : cd <somename>/<dummyname> && touch <someotherfile>
+   #         - c : cd <somename> && mkdir <anotherdummyname>
+   #           next:
+   #             - c : cp package.json <somename>/<anotherdummyname>/<myfile>
+   #     - c: cd <somename> && touch <somefile>
+   
+   # - c: git clone https://github.com/<someuser>/<someotherrepo>.git <someothername>
+   #   next:
+   #     - c : cd <someothername> && composer install
+   #       next : 
+   #         - c : cd <someothername> && cp .env.example .env
+   #           next: 
+   #             - c : cd <someothername> && php artisan migrate
+   #             - c : cd <someothername> && mkdir <somefolder>
+   #             - c : cd <someothername> && touch <somefile>
+   `;
+   fs.writeFileSync("./dummyscript.yaml", text + "\n", { flag: "w" });
+ }
+
 // createLog();
 // const file = fs.readFileSync('./file.yml', 'utf8')
 // let res = YAML.parse(file);
@@ -297,6 +335,16 @@ program
   // function to execute when command is uses
   .action(function(script) {
     remove(script);
+  });
+
+  program
+  .command("make [commands...]") // sub-command name
+  .alias("m") // alternative sub-command
+  .description("Create an initial dummy yaml script, or a script with the commands if provided") // command description
+
+  // function to execute when command is uses
+  .action(function(commands) {
+    make(commands);
   });
 
 
