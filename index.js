@@ -238,33 +238,33 @@ const list = () => {
      }
    }
    text+=`
-   # - c: git clone https://github.com/<someuser>/<somerepo>.git <somename>
-   #   next:
-   #     - c: cd <somename> && npm install
-   #       next:
-   #         - c : cd <somename> && mkdir <dummyname>
-   #           next:
-   #             - c: cd <somename> && git remote set-url origin <someurl>
-   #               next:
-   #                 - c : npm start
-   #                 - c : cd <somename> && git add . && git commit -m 'initial commit' && git push
-   #                 - c : cd <somename>/<dummyname> && touch <someotherfile>
-   #         - c : cd <somename> && mkdir <anotherdummyname>
-   #           next:
-   #             - c : cp package.json <somename>/<anotherdummyname>/<myfile>
-   #     - c: cd <somename> && touch <somefile>
-   
-   # - c: git clone https://github.com/<someuser>/<someotherrepo>.git <someothername>
-   #   next:
-   #     - c : cd <someothername> && composer install
-   #       next : 
-   #         - c : cd <someothername> && cp .env.example .env
-   #           next: 
-   #             - c : cd <someothername> && php artisan migrate
-   #             - c : cd <someothername> && mkdir <somefolder>
-   #             - c : cd <someothername> && touch <somefile>
+# - c : git clone https://github.com/<someuser>/<somerepo>.git <somename>
+#   next :
+#     - c : cd <somename> && npm install
+#       next:
+#         - c : cd <somename> && mkdir <dummyname>
+#           next :
+#             - c : cd <somename> && git remote set-url origin <someurl>
+#               next :
+#                 - c : npm start
+#                 - c : cd <somename> && git add . && git commit -m 'initial commit' && git push
+#                 - c : cd <somename>/<dummyname> && touch <someotherfile>
+#         - c : cd <somename> && mkdir <anotherdummyname>
+#           next:
+#             - c : cp package.json <somename>/<anotherdummyname>/<myfile>
+#     - c : cd <somename> && touch <somefile>
+# - c : git clone https://github.com/<someuser>/<someotherrepo>.git <someothername>
+#   next:
+#     - c : cd <someothername> && composer install
+#       next : 
+#         - c : cd <someothername> && cp .env.example .env
+#           next : 
+#             - c : cd <someothername> && php artisan migrate
+#             - c : cd <someothername> && mkdir <somefolder>
+#             - c : cd <someothername> && touch <somefile>
    `;
    fs.writeFileSync("./dummyscript.yaml", text + "\n", { flag: "w" });
+   console.log('A new script is found in ./dummyscript.yaml')
  }
 
 // createLog();

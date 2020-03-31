@@ -1,6 +1,6 @@
 {
   "name": "yamlscript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Run scripts using yaml files",
   "main": "index.js",
   "bin": {
@@ -11,7 +11,9 @@
   },
   "keywords": [
     "yaml",
-    "automate"
+    "scripts",
+    "scripting",
+    "automation"
   ],
   "author": "Mohamed Refaie",
   "license": "ISC",
