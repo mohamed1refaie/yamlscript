@@ -7,7 +7,10 @@ const promiseExec = util.promisify(require("child_process").exec);
 const program = require("commander");
 const pckg = require("./package.json");
 const os = require('os');
+const prompt = require('prompt');
+let Mutex = require('async-mutex').Mutex;
 const Spinnies = require("spinnies");
+
 const spinner = {
   interval: 80,
   frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
@@ -17,8 +20,15 @@ let spinnies = new Spinnies({
   succeedColor: "green",
   spinner
 });
+let property = {
+  name: 'yesno',
+  message: 'Do you want to replace the current loaded script with the new one?  (y/n)',
+  validator: /y|Y[es]*|n|N[o]?/,
+  warning: 'Must respond yes(y) or no(n)',
+};
 let logName;
 let scriptsPath = os.homedir()+'/yamlscript/';
+const mutex = new Mutex();
 
 
 const createLog = () => {
@@ -41,9 +51,16 @@ const createLog = () => {
 };
 
 const writeLog = log => {
-  fs.appendFile("_logs/" + logName, log + "\n", function(err) {
-    if (err) throw err;
-  });
+  mutex
+    .acquire()
+    .then(function(release) {
+      let fileLog=`-----------------------------------------------------------\n`+log+`\n`;
+      fs.appendFile("_logs/" + logName, fileLog, function(err) {
+        if (err) throw err;
+        release();
+      });
+    })
+  
 };
 
 
@@ -78,18 +95,21 @@ const stopChilds = async (arr,level) =>{
 
 const exec = async (command,level,i) => {
     spinnies.update(command.c+""+level+""+i,{status:"spinning", color:"yellow"});
+        let log="";
         try {
             const { stdout, stderr } = await promiseExec(command.c);
-            if (stderr) writeLog(stderr);
-            if (stdout) writeLog(stdout);
+            if (stderr) log+=stderr;
+            if (stdout) log+=stdout;
             spinnies.succeed(command.c+""+level+""+i);
-            writeLog("command : "+`'`+command.c+`',`+" succeed");
+            log+="command : "+`'`+command.c+`',`+" succeed";
+            writeLog(log);
             if(command.next)
               execCommands(command.next,level+1);
           } catch (e) {
             spinnies.fail(command.c+""+level+""+i);
-            writeLog("command : "+`'`+command.c+`',`+" failed");
-            writeLog(e.stderr);
+            log+=e.stderr;
+            log+="command : "+`'`+command.c+`',`+" failed";
+            writeLog(log);
             if(command.next)
               stopChilds(command.next,level+1)
           }
@@ -156,16 +176,30 @@ const load = (filename,alias)  => {
       }
       if(fileExists(scriptsPath+finalFileName)){
         console.log("A script with the same name is already loaded!");
-        return;
+        prompt.start();
+        prompt.get(property, function (err, result) {
+          if(result.yesno.toLowerCase()=='y'||result.yesno.toLowerCase()=='yes') {
+            let file = fs.readFileSync(filename, 'utf8');
+            try{
+              fs.writeFileSync(scriptsPath+finalFileName, file);
+              console.log("Successfully Loaded your script with name "+finalFileName);
+            }
+            catch(err){
+              console.log("Error: "+err);
+            };
+          }
+        });
+        
+      } else {
+        let file = fs.readFileSync(filename, 'utf8');
+        try{
+          fs.writeFileSync(scriptsPath+finalFileName, file);
+          console.log("Successfully Loaded your script.");
+        }
+        catch(err){
+          console.log("Error: "+err);
+        };
       }
-      let file = fs.readFileSync(filename, 'utf8');
-      try{
-        fs.writeFileSync(scriptsPath+finalFileName, file);
-        console.log("Successfully Loaded your script.");
-      }
-      catch(err){
-        console.log("Error: "+err);
-      };
     }
 }
 

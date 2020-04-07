@@ -18,7 +18,9 @@
   "author": "Mohamed Refaie",
   "license": "ISC",
   "dependencies": {
+    "async-mutex": "^0.2.1",
     "commander": "^5.0.0",
+    "prompt": "^1.0.0",
     "spinnies": "^0.5.1",
     "yaml": "^1.8.2"
   }
