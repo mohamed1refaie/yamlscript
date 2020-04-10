@@ -7,6 +7,8 @@ const promiseExec = util.promisify(require("child_process").exec);
 const program = require("commander");
 const pckg = require("./package.json");
 const os = require('os');
+const readline = require('readline');
+const cliCursor = require('cli-cursor');
 const prompt = require('prompt');
 let Mutex = require('async-mutex').Mutex;
 const Spinnies = require("spinnies");
@@ -29,7 +31,14 @@ let property = {
 let logName;
 let scriptsPath = os.homedir()+'/yamlscript/';
 const mutex = new Mutex();
+let stop=false;
 
+const shutDown = () =>{
+  stop=true;
+  cliCursor.show();
+  readline.moveCursor(process.stderr, 0, spinnies.countLine());
+  console.log('Gracefully Shutingdown, termenating processes...');
+}
 
 const createLog = () => {
   fs.mkdir("_logs", { recursive: true }, err => {
@@ -85,9 +94,10 @@ function read (arr,indent,level,type=true) {
 }
 
 const stopChilds = async (arr,level) =>{
+  let shutString = stop?"-shutdown":"";
   for(let i=0;i<arr.length;i++){
-    spinnies.update(arr[i].c+""+level+""+i,{status:"fail", failColor:"gray", text:spinnies.spinners[arr[i].c+""+level+""+i].text+"  (terminated)"});
-    writeLog("command : "+`'`+arr[i].c+`',`+" terminated");
+    spinnies.update(arr[i].c+""+level+""+i,{status:"fail", failColor:"gray", text:spinnies.spinners[arr[i].c+""+level+""+i].text+"  (terminated"+shutString+")"});
+    writeLog("command : "+`'`+arr[i].c+`',`+" terminated"+shutString);
     if(arr[i].next)
       stopChilds(arr[i].next,level+1);
   }
@@ -117,9 +127,12 @@ const exec = async (command,level,i) => {
 }
 
 const execCommands = async (arr,level) => {
+    if(stop==true) stopChilds(arr,level);
+    else{
      for(let i=0;i<arr.length;i++) {
         exec(arr[i],level,i);
      }
+    }
 }
 
 const fileExists = (filename) => {
@@ -297,8 +310,8 @@ const list = () => {
 #             - c : cd <someothername> && mkdir <somefolder>
 #             - c : cd <someothername> && touch <somefile>
    `;
-   fs.writeFileSync("./dummyscript.yaml", text + "\n", { flag: "w" });
-   console.log('A new script is found in ./dummyscript.yaml')
+   fs.writeFileSync("./script.yaml", text + "\n", { flag: "w" });
+   console.log('A new script is found in ./script.yaml')
  }
 
 // createLog();
@@ -374,7 +387,7 @@ program
   program
   .command("make [commands...]") // sub-command name
   .alias("m") // alternative sub-command
-  .description("Create an initial dummy yaml script, or a script with the commands if provided") // command description
+  .description("Create an initial yaml script, or a script with the commands if provided") // command description
 
   // function to execute when command is uses
   .action(function(commands) {
@@ -383,3 +396,7 @@ program
 
 
 program.parse(process.argv);
+
+
+process.on('SIGTERM', shutDown);
+process.on('SIGINT', shutDown);
