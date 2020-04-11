@@ -1,7 +1,7 @@
 {
   "name": "yamlscript",
   "version": "1.0.2",
-  "description": "Run scripts using yaml files",
+  "description": "An easy to use npm package that let you write and run command line scripts in a yaml format",
   "main": "index.js",
   "license": "MIT",
   "repository": "mohamed1refaie/yamlscript",
