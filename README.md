@@ -23,7 +23,7 @@
    
 </p>
 
-An easy to use package that let you write and run command line scripts in a yaml format, you can define which commands run in series and which commands run in parallel.
+An easy to use npm package that let you write and run command line scripts in a yaml format, you can define which commands run in series and which commands run in parallel.
 It let you load scripts to be used again, Also it create a log file for each run for tracking
 
 ## Installation
@@ -65,10 +65,49 @@ The commands will be executed in the following order
 ![flow](https://user-images.githubusercontent.com/24723240/79046723-e0250700-7c12-11ea-910d-6555d353a793.jpg)
 ## Usage
 
-### Initialize a script `yamlscript make [commands...]`
-It creates an initial yaml script under the name of script.yaml, or a script with the commands if provided
-  Example: `yamlscript make`
-  
+### - Initialize a script `yamlscript make [commands...]`
+Creates an initial yaml script under the name of script.yaml, or a script with the commands if provided
 
+**Example:** `yamlscript make` or `yamlscript make "git clone <myrepourl>" "mkdir folder"`
+            
+### - Load a script `yamlscript load <script> [alias]`
+Validate the script first then loads the script to be used later, it will be loaded under the alias name if provided if not it will be loaded under the script file name
 
+**Example:** `yamlscript load script.yaml` or `yamlscript load script.yaml myscript`
 
+### - Run a script `yamlscript run <script>`
+Run an already loaded script, or a quick run without the script being loaded by typing the path of the script
+
+**Example:** `yamlscript run myscript` or `yamlscript run ./script.yaml`
+
+![executing example](https://user-images.githubusercontent.com/24723240/79052269-84b84080-7c35-11ea-9e8e-e9aab6e7ac73.gif)
+
+### - Display a script `yamlscript display <script>`
+Display an already loaded script
+
+**Example:** `yamlscript display myscript` or `yamlscript d myscript`
+
+![displayscript](https://user-images.githubusercontent.com/24723240/79052612-17f27580-7c38-11ea-8e25-1f9916a1c75c.png)
+
+### - Validate a script `yamlscript validate <script>`
+Validate that a script in a correct Yaml format without loading it
+
+**Example:** `yamlscript validate script.yaml` or `yamlscript val script.yaml`
+
+### - Remove a script `yamlscript remove <script>`
+Remove an already loaded script
+
+**Example:** `yamlscript remove myscript` or `yamlscript rm myscript`
+
+### - List scripts `yamlscript ls`
+List all the loaded scripts
+
+**Example:** `yamlscript list` or `yamlscript ls`
+
+## License
+
+[MIT](https://github.com/mohamed1refaie/yamlscript/blob/master/LICENSE) © [Mohamed Refaie](https://github.com/mohamed1refaie)
+
+## Contribute
+
+Contributions are always welcome!
