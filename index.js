@@ -264,10 +264,16 @@ const list = () => {
   if (!fs.existsSync(scriptsPath)){
     fs.mkdirSync(scriptsPath);
   }
-  if(fileExists(scriptsPath+filename)){
+  let fullpath = scriptsPath+filename;
+  if(filename.substr(0,2)=="./"){
+    let isValid = validate(filename,false);
+    if(isValid)fullpath=filename;
+    else return;
+  }
+  if(fileExists(fullpath)){
     createLog();
     console.log(`you can find a complete log for this run at ./_logs/`+logName)
-    const file = fs.readFileSync(scriptsPath+filename, 'utf8')
+    const file = fs.readFileSync(fullpath, 'utf8')
     let res = YAML.parse(file);
     read(res,"",0);
     execCommands(res,0);
@@ -293,7 +299,7 @@ const list = () => {
 #           next :
 #             - c : cd <somename> && git remote set-url origin <someurl>
 #               next :
-#                 - c : npm start
+#                 - c : touch file.txt
 #                 - c : cd <somename> && git add . && git commit -m 'initial commit' && git push
 #                 - c : cd <somename>/<dummyname> && touch <someotherfile>
 #         - c : cd <somename> && mkdir <anotherdummyname>
