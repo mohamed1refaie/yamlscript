@@ -265,7 +265,7 @@ const list = () => {
     fs.mkdirSync(scriptsPath);
   }
   let fullpath = scriptsPath+filename;
-  if(filename.substr(0,2)=="./"){
+  if(filename.substr(0,2)=="./"||filename.indexOf('/')!=-1){
     let isValid = validate(filename,false);
     if(isValid)fullpath=filename;
     else return;
@@ -373,7 +373,7 @@ program
   program
   .command("run <script>") // sub-command name
   .alias("r") // alternative sub-command
-  .description("Run an already loaded script") // command description
+  .description("Run an already loaded script, or a quick run without loading a script by typing the path of the script") // command description
 
   // function to execute when command is uses
   .action(function(script) {
