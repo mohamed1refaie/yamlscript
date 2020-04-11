@@ -1,6 +1,6 @@
 {
   "name": "yamlscript",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Run scripts using yaml files",
   "main": "index.js",
   "bin": {
