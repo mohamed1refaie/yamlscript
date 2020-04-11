@@ -3,6 +3,8 @@
   "version": "1.0.2",
   "description": "Run scripts using yaml files",
   "main": "index.js",
+  "license": "MIT",
+  "repository": "mohamed1refaie/yamlscript",
   "bin": {
     "yamlscript": "./index.js"
   },
@@ -13,10 +15,10 @@
     "yaml",
     "scripts",
     "scripting",
-    "automation"
+    "automation",
+    "commands"
   ],
   "author": "Mohamed Refaie",
-  "license": "ISC",
   "dependencies": {
     "async-mutex": "^0.2.1",
     "cli-cursor": "^3.1.0",
