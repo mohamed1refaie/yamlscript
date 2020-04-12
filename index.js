@@ -79,7 +79,7 @@ function read (arr,indent,level,type=true) {
         let str=indent;
         if(i==arr.length-1)str+='└── '
         else str+="├── ";
-        str+=arr[i].c;
+        str+=arr[i].title?arr[i].title:arr[i].c;
         if(type){
         spinnies.add(arr[i].c+""+level+""+i, {
             text: str,
@@ -404,5 +404,5 @@ program
 program.parse(process.argv);
 
 
-process.on('SIGTERM', shutDown);
-process.on('SIGINT', shutDown);
+// process.on('SIGTERM', shutDown);
+// process.on('SIGINT', shutDown);
