@@ -9,7 +9,7 @@
     "yamlscript": "./index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "yaml",
@@ -27,5 +27,9 @@
     "readline": "^1.3.0",
     "spinnies": "^0.5.1",
     "yaml": "^1.8.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1"
   }
 }

@@ -191,7 +191,7 @@ const load = (filename,alias)  => {
         console.log("A script with the same name is already loaded!");
         prompt.start();
         prompt.get(property, function (err, result) {
-          if(result.yesno.toLowerCase()=='y'||result.yesno.toLowerCase()=='yes') {
+          if((result&&result.yesno.toLowerCase()=='y')||(result&&result.yesno.toLowerCase()=='yes')) {
             let file = fs.readFileSync(filename, 'utf8');
             try{
               fs.writeFileSync(scriptsPath+finalFileName, file);
@@ -201,8 +201,7 @@ const load = (filename,alias)  => {
               console.log("Error: "+err);
             };
           }
-        });
-        
+        });  
       } else {
         let file = fs.readFileSync(filename, 'utf8');
         try{
