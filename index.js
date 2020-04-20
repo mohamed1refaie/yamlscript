@@ -291,20 +291,30 @@ const list = () => {
    }
    text+=`
 # - c : git clone https://github.com/<someuser>/<somerepo>.git <somename>
+#   title : Cloning a node repo in a folder named <somename>
 #   next :
 #     - c : cd <somename> && npm install
+#       title : Installing node dependencies
 #       next:
 #         - c : cd <somename> && mkdir <dummyname>
+#           title : Making a directory named <dummyname>
 #           next :
 #             - c : cd <somename> && git remote set-url origin <someurl>
+#               title : Changing the remote of the node repo
 #               next :
 #                 - c : touch file.txt
+#                   title : Creating file.txt
 #                 - c : cd <somename> && git add . && git commit -m 'initial commit' && git push
+#                   title : Commit and push
 #                 - c : cd <somename>/<dummyname> && touch <someotherfile>
+#                   title : Creating a file named <someotherfile>
 #         - c : cd <somename> && mkdir <anotherdummyname>
+#           title : Making a directory named <anotherdummyname>
 #           next:
 #             - c : cp package.json <somename>/<anotherdummyname>/<myfile>
+#               title : Copying a package.json into <myfile>
 #     - c : cd <somename> && touch <somefile>
+#       title : Making a file named <somefile>
 # - c : git clone https://github.com/<someuser>/<someotherrepo>.git <someothername>
 #   next:
 #     - c : cd <someothername> && composer install
