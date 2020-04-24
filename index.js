@@ -37,7 +37,7 @@ const shutDown = () =>{
   stop=true;
   cliCursor.show();
   readline.moveCursor(process.stderr, 0, spinnies.countLine());
-  console.log('Gracefully Shutingdown, termenating processes...');
+  console.log('Gracefully Shutting down, terminating processes...');
 }
 
 const createLog = () => {
@@ -162,7 +162,7 @@ const validate = (filename,print=true) => {
         console.log("Your YAML file is valid!");
     }
     else {
-      console.log("The commands in the YAML file is not in the correct format");
+      console.log("The commands in the YAML file are not in the correct format");
       return false;
     }
   } catch (e){
@@ -195,7 +195,7 @@ const load = (filename,alias)  => {
             let file = fs.readFileSync(filename, 'utf8');
             try{
               fs.writeFileSync(scriptsPath+finalFileName, file);
-              console.log("Successfully Loaded your script with name "+finalFileName);
+              console.log("Successfully loaded your script with name "+finalFileName);
             }
             catch(err){
               console.log("Error: "+err);
@@ -206,7 +206,7 @@ const load = (filename,alias)  => {
         let file = fs.readFileSync(filename, 'utf8');
         try{
           fs.writeFileSync(scriptsPath+finalFileName, file);
-          console.log("Successfully Loaded your script.");
+          console.log("Successfully loaded your script.");
         }
         catch(err){
           console.log("Error: "+err);
@@ -221,7 +221,7 @@ const list = () => {
   }
   fs.readdir(scriptsPath, function(err, items) { 
     if(items==null||items.length==0) {
-      console.log("There is no loaded scripts");
+      console.log("There are no loaded scripts");
       return;
     }
     console.log("")
@@ -271,7 +271,7 @@ const list = () => {
   }
   if(fileExists(fullpath)){
     createLog();
-    console.log(`you can find a complete log for this run at ./_logs/`+logName)
+    console.log(`You can find a complete log for this run at ./_logs/`+logName)
     const file = fs.readFileSync(fullpath, 'utf8')
     let res = YAML.parse(file);
     read(res,"",0);
@@ -342,7 +342,7 @@ program.usage("[command]");
 program
   .command("validate <file>") // sub-command name
   .alias("val") // alternative sub-command
-  .description("validate that a script in a correct yaml format") // command description
+  .description("Validate that a script is in a correct yaml format") // command description
 
   // function to execute when command is uses
   .action(function(file) {
@@ -382,7 +382,7 @@ program
   program
   .command("run <script>") // sub-command name
   .alias("r") // alternative sub-command
-  .description("Run an already loaded script, or a quick run without loading a script by typing the path of the script") // command description
+  .description("Run an already loaded script, or a quick run without loading a script by typing the path to the script") // command description
 
   // function to execute when command is uses
   .action(function(script) {
